@@ -49,10 +49,6 @@ namespace QRCodeGenerator
             {
                 completed = completed.Substring(0, MaxSupportedBits);
             }
-
-            Console.WriteLine($"Total capacity: {MaxSupportedBits} bits");
-            Console.WriteLine($"Final encoded length: {completed.Length} bits");
-            Console.WriteLine($"Final encoded bit string:\n{completed}");
         }
     }
 }
