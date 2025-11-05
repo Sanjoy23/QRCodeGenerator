@@ -1,6 +1,6 @@
 ﻿namespace QRCodeGenerator.Utilites
 {
-    public class ErrorCollectionCodeWords
+    public class ErrorCollectionCodeWordAndBlockInfo
     {
         public class ECInfo
         {
@@ -295,6 +295,54 @@
                 { (28, "M"), new ECInfo { TotalDataCodewords = 1193, ECCodewordsPerBlock = 28, Group1Blocks = 3, Group1Codewords = 45, Group2Blocks = 23, Group2Codewords = 46 } },
                 { (28, "Q"), new ECInfo { TotalDataCodewords = 871, ECCodewordsPerBlock = 30, Group1Blocks = 4, Group1Codewords = 24, Group2Blocks = 31, Group2Codewords = 25 } },
                 { (28, "H"), new ECInfo { TotalDataCodewords = 661, ECCodewordsPerBlock = 30, Group1Blocks = 11, Group1Codewords = 15, Group2Blocks = 31, Group2Codewords = 16 } },
+                { (29, "L"), new ECInfo { TotalDataCodewords = 1631, ECCodewordsPerBlock = 30, Group1Blocks = 7, Group1Codewords = 116, Group2Blocks = 7, Group2Codewords = 117 } },
+                { (29, "M"), new ECInfo { TotalDataCodewords = 1267, ECCodewordsPerBlock = 28, Group1Blocks = 21, Group1Codewords = 45, Group2Blocks = 7, Group2Codewords = 46 } },
+                { (29, "Q"), new ECInfo { TotalDataCodewords = 911, ECCodewordsPerBlock = 30, Group1Blocks = 1, Group1Codewords = 23, Group2Blocks = 37, Group2Codewords = 24 } },
+                { (29, "H"), new ECInfo { TotalDataCodewords = 701, ECCodewordsPerBlock = 30, Group1Blocks = 19, Group1Codewords = 15, Group2Blocks = 26, Group2Codewords = 16 } },
+                { (30, "L"), new ECInfo { TotalDataCodewords = 1735, ECCodewordsPerBlock = 30, Group1Blocks = 5, Group1Codewords = 115, Group2Blocks = 10, Group2Codewords = 116 } },
+                { (30, "M"), new ECInfo { TotalDataCodewords = 1373, ECCodewordsPerBlock = 28, Group1Blocks = 19, Group1Codewords = 47, Group2Blocks = 10, Group2Codewords = 48 } },
+                { (30, "Q"), new ECInfo { TotalDataCodewords = 985, ECCodewordsPerBlock = 30, Group1Blocks = 15, Group1Codewords = 24, Group2Blocks = 25, Group2Codewords = 25 } },
+                { (30, "H"), new ECInfo { TotalDataCodewords = 745, ECCodewordsPerBlock = 30, Group1Blocks = 23, Group1Codewords = 15, Group2Blocks = 25, Group2Codewords = 16 } },
+                { (31, "L"), new ECInfo { TotalDataCodewords = 1843, ECCodewordsPerBlock = 30, Group1Blocks = 13, Group1Codewords = 115, Group2Blocks = 3, Group2Codewords = 116 } },
+                { (31, "M"), new ECInfo { TotalDataCodewords = 1455, ECCodewordsPerBlock = 28, Group1Blocks = 2, Group1Codewords = 46, Group2Blocks = 29, Group2Codewords = 47 } },
+                { (31, "Q"), new ECInfo { TotalDataCodewords = 1033, ECCodewordsPerBlock = 30, Group1Blocks = 42, Group1Codewords = 24, Group2Blocks = 1, Group2Codewords = 25 } },
+                { (31, "H"), new ECInfo { TotalDataCodewords = 793, ECCodewordsPerBlock = 30, Group1Blocks = 23, Group1Codewords = 15, Group2Blocks = 28, Group2Codewords = 16 } },
+                { (32, "L"), new ECInfo { TotalDataCodewords = 1955, ECCodewordsPerBlock = 30, Group1Blocks = 17, Group1Codewords = 115, Group2Blocks = 0, Group2Codewords = 0 } },
+                { (32, "M"), new ECInfo { TotalDataCodewords = 1541, ECCodewordsPerBlock = 28, Group1Blocks = 10, Group1Codewords = 46, Group2Blocks = 23, Group2Codewords = 47 } },
+                { (32, "Q"), new ECInfo { TotalDataCodewords = 1115, ECCodewordsPerBlock = 30, Group1Blocks = 10, Group1Codewords = 24, Group2Blocks = 35, Group2Codewords = 25 } },
+                { (32, "H"), new ECInfo { TotalDataCodewords = 845, ECCodewordsPerBlock = 30, Group1Blocks = 19, Group1Codewords = 15, Group2Blocks = 35, Group2Codewords = 16 } },
+                { (33, "L"), new ECInfo { TotalDataCodewords = 2071, ECCodewordsPerBlock = 30, Group1Blocks = 17, Group1Codewords = 115, Group2Blocks = 1, Group2Codewords = 116 } },
+                { (33, "M"), new ECInfo { TotalDataCodewords = 1631, ECCodewordsPerBlock = 28, Group1Blocks = 14, Group1Codewords = 46, Group2Blocks = 21, Group2Codewords = 47 } },
+                { (33, "Q"), new ECInfo { TotalDataCodewords = 1171, ECCodewordsPerBlock = 30, Group1Blocks = 29, Group1Codewords = 24, Group2Blocks = 19, Group2Codewords = 25 } },
+                { (33, "H"), new ECInfo { TotalDataCodewords = 901, ECCodewordsPerBlock = 30, Group1Blocks = 11, Group1Codewords = 15, Group2Blocks = 46, Group2Codewords = 16 } },
+                { (34, "L"), new ECInfo { TotalDataCodewords = 2191, ECCodewordsPerBlock = 30, Group1Blocks = 13, Group1Codewords = 115, Group2Blocks = 6, Group2Codewords = 116 } },
+                { (34, "M"), new ECInfo { TotalDataCodewords = 1725, ECCodewordsPerBlock = 28, Group1Blocks = 14, Group1Codewords = 46, Group2Blocks = 23, Group2Codewords = 47 } },
+                { (34, "Q"), new ECInfo { TotalDataCodewords = 1231, ECCodewordsPerBlock = 30, Group1Blocks = 44, Group1Codewords = 24, Group2Blocks = 7, Group2Codewords = 25 } },
+                { (34, "H"), new ECInfo { TotalDataCodewords = 961, ECCodewordsPerBlock = 30, Group1Blocks = 59, Group1Codewords = 16, Group2Blocks = 1, Group2Codewords = 17 } },
+                { (35, "L"), new ECInfo { TotalDataCodewords = 2306, ECCodewordsPerBlock = 30, Group1Blocks = 12, Group1Codewords = 121, Group2Blocks = 7, Group2Codewords = 122 } },
+                { (35, "M"), new ECInfo { TotalDataCodewords = 1812, ECCodewordsPerBlock = 28, Group1Blocks = 12, Group1Codewords = 47, Group2Blocks = 26, Group2Codewords = 48 } },
+                { (35, "Q"), new ECInfo { TotalDataCodewords = 1286, ECCodewordsPerBlock = 30, Group1Blocks = 39, Group1Codewords = 24, Group2Blocks = 14, Group2Codewords = 25 } },
+                { (35, "H"), new ECInfo { TotalDataCodewords = 986, ECCodewordsPerBlock = 30, Group1Blocks = 22, Group1Codewords = 15, Group2Blocks = 41, Group2Codewords = 16 } },
+                { (36, "L"), new ECInfo { TotalDataCodewords = 2434, ECCodewordsPerBlock = 30, Group1Blocks = 6, Group1Codewords = 121, Group2Blocks = 14, Group2Codewords = 122 } },
+                { (36, "M"), new ECInfo { TotalDataCodewords = 1914, ECCodewordsPerBlock = 28, Group1Blocks = 6, Group1Codewords = 47, Group2Blocks = 34, Group2Codewords = 48 } },
+                { (36, "Q"), new ECInfo { TotalDataCodewords = 1354, ECCodewordsPerBlock = 30, Group1Blocks = 46, Group1Codewords = 24, Group2Blocks = 10, Group2Codewords = 25 } },
+                { (36, "H"), new ECInfo { TotalDataCodewords = 1054, ECCodewordsPerBlock = 30, Group1Blocks = 2, Group1Codewords = 15, Group2Blocks = 64, Group2Codewords = 16 } },
+                { (37, "L"), new ECInfo { TotalDataCodewords = 2566, ECCodewordsPerBlock = 30, Group1Blocks = 17, Group1Codewords = 122, Group2Blocks = 4, Group2Codewords = 123 } },
+                { (37, "M"), new ECInfo { TotalDataCodewords = 1992, ECCodewordsPerBlock = 28, Group1Blocks = 29, Group1Codewords = 46, Group2Blocks = 14, Group2Codewords = 47 } },
+                { (37, "Q"), new ECInfo { TotalDataCodewords = 1426, ECCodewordsPerBlock = 30, Group1Blocks = 49, Group1Codewords = 24, Group2Blocks = 10, Group2Codewords = 25 } },
+                { (37, "H"), new ECInfo { TotalDataCodewords = 1096, ECCodewordsPerBlock = 30, Group1Blocks = 24, Group1Codewords = 15, Group2Blocks = 46, Group2Codewords = 16 } },
+                { (38, "L"), new ECInfo { TotalDataCodewords = 2702, ECCodewordsPerBlock = 30, Group1Blocks = 4, Group1Codewords = 122, Group2Blocks = 18, Group2Codewords = 123 } },
+                { (38, "M"), new ECInfo { TotalDataCodewords = 2102, ECCodewordsPerBlock = 28, Group1Blocks = 13, Group1Codewords = 46, Group2Blocks = 32, Group2Codewords = 47 } },
+                { (38, "Q"), new ECInfo { TotalDataCodewords = 1502, ECCodewordsPerBlock = 30, Group1Blocks = 48, Group1Codewords = 24, Group2Blocks = 14, Group2Codewords = 25 } },
+                { (38, "H"), new ECInfo { TotalDataCodewords = 1142, ECCodewordsPerBlock = 30, Group1Blocks = 42, Group1Codewords = 15, Group2Blocks = 32, Group2Codewords = 16 } },
+                { (39, "L"), new ECInfo { TotalDataCodewords = 2812, ECCodewordsPerBlock = 30, Group1Blocks = 20, Group1Codewords = 117, Group2Blocks = 4, Group2Codewords = 118 } },
+                { (39, "M"), new ECInfo { TotalDataCodewords = 2216, ECCodewordsPerBlock = 28, Group1Blocks = 40, Group1Codewords = 47, Group2Blocks = 7, Group2Codewords = 48 } },
+                { (39, "Q"), new ECInfo { TotalDataCodewords = 1582, ECCodewordsPerBlock = 30, Group1Blocks = 43, Group1Codewords = 24, Group2Blocks = 22, Group2Codewords = 25 } },
+                { (39, "H"), new ECInfo { TotalDataCodewords = 1222, ECCodewordsPerBlock = 30, Group1Blocks = 10, Group1Codewords = 15, Group2Blocks = 67, Group2Codewords = 16 } },
+                { (40, "L"), new ECInfo { TotalDataCodewords = 2956, ECCodewordsPerBlock = 30, Group1Blocks = 19, Group1Codewords = 118, Group2Blocks = 6, Group2Codewords = 119 } },
+                { (40, "M"), new ECInfo { TotalDataCodewords = 2334, ECCodewordsPerBlock = 28, Group1Blocks = 18, Group1Codewords = 47, Group2Blocks = 31, Group2Codewords = 48 } },
+                { (40, "Q"), new ECInfo { TotalDataCodewords = 1666, ECCodewordsPerBlock = 30, Group1Blocks = 34, Group1Codewords = 24, Group2Blocks = 34, Group2Codewords = 25 } },
+                { (40, "H"), new ECInfo { TotalDataCodewords = 1276, ECCodewordsPerBlock = 30, Group1Blocks = 20, Group1Codewords = 15, Group2Blocks = 61, Group2Codewords = 16 } }
             };
         }
     }

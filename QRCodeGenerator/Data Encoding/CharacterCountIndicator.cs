@@ -38,6 +38,36 @@
                     default: return 0;
                 }
             }
+            else if (version >= 10 && version <= 26)
+            {
+                switch (mode)
+                {
+                    case QrEncodingMode.Numeric:
+                        return 12;
+                    case QrEncodingMode.Alphanumeric:
+                        return 11;
+                    case QrEncodingMode.Byte:
+                        return 16;
+                    case QrEncodingMode.Kanji:
+                        return 10;
+                    default: return 0;
+                }
+            }
+            else if (version >= 27 && version <= 40)
+            {
+                switch (mode)
+                {
+                    case QrEncodingMode.Numeric:
+                        return 14;
+                    case QrEncodingMode.Alphanumeric:
+                        return 13;
+                    case QrEncodingMode.Byte:
+                        return 16;
+                    case QrEncodingMode.Kanji:
+                        return 12;
+                    default: return 0;
+                }
+            }
             return 0;
         }
     }
