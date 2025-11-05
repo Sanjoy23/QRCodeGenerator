@@ -6,7 +6,11 @@ using System.Threading.Tasks;
 
 namespace QRCodeGenerator.Services
 {
-    internal class GenerateLogExp
+    static class GenerateLogExp
     {
+        public static void GenerateLogAndExp()
+        {
+            
+        }
     }
 }

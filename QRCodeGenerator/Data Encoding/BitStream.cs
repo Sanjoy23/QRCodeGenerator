@@ -1,9 +1,4 @@
 ﻿using QRCodeGenerator.Utilites;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace QRCodeGenerator.Services
 {
@@ -19,8 +14,8 @@ namespace QRCodeGenerator.Services
             string completed = string.Concat(modeIndicator, charCountIndicator, encodedData);
 
             // Lookup total capacity (Version 4, L)
-            Dictionary<(int, string), int> CodeWords = ErrorCollectionCodeWords.CodeWordsByVersionAndECLevel();
-            int totalCodeWordsByVandECL = CodeWords[(4, "L")];
+            Dictionary<(int, string), ErrorCollectionCodeWordAndBlockInfo.ECInfo> CodeWords = ErrorCollectionCodeWordAndBlockInfo.GetECTable();
+            int totalCodeWordsByVandECL = CodeWords[(4, "L")].TotalDataCodewords;
             int MaxSupportedBits = totalCodeWordsByVandECL * 8;
 
             // Step 1: Add terminator bits (max 4)

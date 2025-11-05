@@ -20,8 +20,6 @@ namespace QRCodeGenerator
                 dataCodeWords.Add(codeword);
             }
 
-            Console.WriteLine("Data Codewords:");
-            Console.WriteLine(dataCodeWords.Count);
 
         }
     }
