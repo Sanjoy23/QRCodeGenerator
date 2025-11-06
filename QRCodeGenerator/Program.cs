@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using QRCodeGenerator.ECC;
 using QRCodeGenerator.Services;
-using QRCodeGenerator.Utilites;
 
 namespace QRCodeGenerator
 {
@@ -15,7 +13,13 @@ namespace QRCodeGenerator
 
             List<byte> codeWords = BitStreamToCodeWords.ToCodeWords(bitString);
 
-            Console.WriteLine(codeWords.Count);
+            var blockDefs = new List<ErrorCorrectionCoding.BlockDef> { new ErrorCorrectionCoding.BlockDef(1, 80, 20) };
+            var dataBlocks = ErrorCorrectionCoding.SplitIntoBlocks(codeWords, blockDefs);
+            var eccBlocks = ErrorCorrectionCoding.ComputeEccForBlocks(dataBlocks, 20);
+            var finalStream = ErrorCorrectionCoding.InterleaveBlocks(dataBlocks, eccBlocks);
+
+            Console.WriteLine("Final codeword count: " + finalStream.Count);
+            Console.WriteLine(string.Join(" ", finalStream.Select(b => b.ToString("X2"))));
         }
     }
 }
