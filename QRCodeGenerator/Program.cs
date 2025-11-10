@@ -1,4 +1,5 @@
 ﻿using QRCodeGenerator.ECC;
+using QRCodeGenerator.Matrix_Placement;
 using QRCodeGenerator.Services;
 
 namespace QRCodeGenerator
@@ -18,8 +19,10 @@ namespace QRCodeGenerator
             var eccBlocks = ErrorCorrectionCoding.ComputeEccForBlocks(dataBlocks, 20);
             var finalStream = ErrorCorrectionCoding.InterleaveBlocks(dataBlocks, eccBlocks);
 
-            Console.WriteLine("Final codeword count: " + finalStream.Count);
-            Console.WriteLine(string.Join(" ", finalStream.Select(b => b.ToString("X2"))));
+            //Console.WriteLine("Final codeword count: " + finalStream.Count);
+            //Console.WriteLine(string.Join(" ", finalStream.Select(b => b.ToString("X2"))));
+            var m = QRCodeMatrix.CreateBaseMatrix(4);
+            
         }
     }
 }
