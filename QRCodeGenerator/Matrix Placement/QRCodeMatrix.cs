@@ -52,9 +52,12 @@
             {
                 matrix[i] = new bool[size];
             }
-            setFinderPattern(matrix, 0, 0);
-            setFinderPattern(matrix, 0, size - 7);
-            setFinderPattern(matrix, size - 7, 0);
+            AddFinderPattern(matrix, 0, 0);
+            AddFinderPattern(matrix, 0, size - 7);
+            AddFinderPattern(matrix, size - 7, 0);
+            PlaceAllignmentPattern(matrix, version);
+            AddTimingPattern(matrix, size);
+            AddDarkModule(matrix, version);
             for (int i = 0; i < size; i++)
             {
                 for (int j = 0; j < size; j++)
@@ -69,7 +72,7 @@
 
         }
 
-        public static void setFinderPattern(bool[][] matrix, int row, int col)
+        public static void AddFinderPattern(bool[][] matrix, int row, int col)
         {
             for (int i = 0; i < 7; i++)
             {
@@ -107,10 +110,48 @@
                 {
                     if (!checkOverlapsPattern(row, col, size))
                     {
-
+                        SetEachAllignmentPattern(matrix, row, col);
                     }
                 }
             }
+        }
+
+        public static void SetEachAllignmentPattern(bool[][] matrix, int c_row, int c_col)
+        {
+            matrix[c_row][c_col] = true;
+            for(int i = c_row - 2; i < c_row + 3; i++)
+            {
+                for(int j = c_col - 2; j < c_col + 3; j++)
+                {
+                    if (i == c_row - 2 || j == c_col - 2 || j == c_col + 2 || i == c_row + 2)
+                    {
+                        matrix[i][j] = true;
+                    }
+                    else if (i == c_row && j == c_col) matrix[i][j] = true;
+                    else matrix[i][j] = false;
+                }
+            }
+        }
+
+        public static void AddTimingPattern(bool[][] matrix, int size)
+        {
+            for(int i = 8; i < size - 8; i++)
+            {
+                matrix[6][i] = !matrix[6][i - 1] ;
+            }
+
+            for(int i = 8; i < size - 8; i++)
+            {
+                matrix[i][6] = !matrix[i][6];
+            }
+        }
+
+        public static void AddDarkModule(bool[][] matrix, int version)
+        {
+            int row = 8;
+            int col = version * 4 + 9;
+            matrix[row][col] = true;
+            //Console.WriteLine(row + " " + col);
         }
 
 
