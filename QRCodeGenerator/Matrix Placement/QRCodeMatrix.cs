@@ -2,6 +2,15 @@
 {
     public static class QRCodeMatrix
     {
+        public enum ModuleType
+        {
+            Empty = 0,
+            Data = 1,
+            Function = 2,
+            Format = 3,
+            Version = 4,
+            Timing = 5
+        }
         private static readonly Dictionary<int, int[]> AllignmentPatternLocations = new()
         {
             { 2,  new[] { 6, 18 } },
@@ -44,7 +53,7 @@
             { 39, new[] { 6, 26, 54, 82, 110, 138, 166 } },
             { 40, new[] { 6, 30, 58, 86, 114, 142, 170 } },
         };
-        public static bool[][] CreateBaseMatrix(int version)
+        public static bool[][] CreateBaseMatrix(int version, List<byte> message)
         {
             int size = getSize(version);
             bool[][] matrix = new bool[size][];
@@ -58,12 +67,17 @@
             PlaceAllignmentPattern(matrix, version);
             AddTimingPattern(matrix, size);
             AddDarkModule(matrix, version);
+            AddReverseFormatInfoArea(matrix, size);
+            AddDataBits(matrix, message, version, size);
+
+            
             for (int i = 0; i < size; i++)
             {
                 for (int j = 0; j < size; j++)
                 {
                     if (matrix[i][j]) Console.Write("*");
-                    else Console.Write("#");
+                    else if(!matrix[i][j]) Console.Write("#");
+                    else Console.Write(matrix[i][j]);
                    
                 }
                 Console.WriteLine();
@@ -154,6 +168,33 @@
             //Console.WriteLine(row + " " + col);
         }
 
+        public static void AddReverseFormatInfoArea(bool[][] matrix, int size)
+        {
+            for(int i = 0; i < 9; i++)
+            {
+                matrix[8][i] = true;
+                matrix[8][size - i - 1] = true;
+            }
+
+            for (int i = 0; i < 9; i++)
+            {
+                matrix[i][8] = true;
+                matrix[size - i - 1][8] = true;
+            }
+
+        }
+
+        public static void AddReverseVersionInfoArea(bool[][] matrix, int size, int version)
+        {
+            if (version < 7) throw new InvalidOperationException("Applicable only for version 7 to 40");
+
+        }
+        public static void AddDataBits(bool[][] matrix, List<byte> dataBits, int version, int size)
+        {
+            int direction = -1;
+            int dataIndex = 0;
+            
+        }
 
         public static int getSize(int version)
         {

@@ -70,5 +70,16 @@
 
             return result;
         }
+
+        public static List<byte> ConvertToBitList(List<byte> codewords)
+        {
+            List<byte> bits = new List<byte>(codewords.Count * 8);
+            foreach (byte b in codewords)
+            {
+                for (int i = 7; i >= 0; i--) // MSB first
+                    bits.Add((byte)((b >> i) & 1));
+            }
+            return bits;
+        }
     }
 }

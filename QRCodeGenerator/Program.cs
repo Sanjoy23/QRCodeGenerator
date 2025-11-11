@@ -18,10 +18,9 @@ namespace QRCodeGenerator
             var dataBlocks = ErrorCorrectionCoding.SplitIntoBlocks(codeWords, blockDefs);
             var eccBlocks = ErrorCorrectionCoding.ComputeEccForBlocks(dataBlocks, 20);
             var finalStream = ErrorCorrectionCoding.InterleaveBlocks(dataBlocks, eccBlocks);
+            var bitList = ErrorCorrectionCoding.ConvertToBitList(finalStream);
 
-            //Console.WriteLine("Final codeword count: " + finalStream.Count);
-            //Console.WriteLine(string.Join(" ", finalStream.Select(b => b.ToString("X2"))));
-            var m = QRCodeMatrix.CreateBaseMatrix(4);
+            var m = QRCodeMatrix.CreateBaseMatrix(4, bitList);
             
         }
     }
