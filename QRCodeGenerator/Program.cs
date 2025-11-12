@@ -20,7 +20,7 @@ namespace QRCodeGenerator
             var finalStream = ErrorCorrectionCoding.InterleaveBlocks(dataBlocks, eccBlocks);
             var bitList = ErrorCorrectionCoding.ConvertToBitList(finalStream);
 
-            var m = QRCodeMatrix.CreateBaseMatrix(4, bitList);
+            var m = QRCodeMatrix.CreateBaseMatrix(2, bitList);
             
         }
     }
