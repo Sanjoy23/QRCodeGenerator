@@ -1,6 +1,8 @@
-﻿using QRCodeGenerator.ECC;
+﻿using QRCodeGenerator.DataMasking;
+using QRCodeGenerator.ECC;
 using QRCodeGenerator.Matrix_Placement;
 using QRCodeGenerator.Services;
+using System.Data;
 
 namespace QRCodeGenerator
 {
@@ -21,6 +23,8 @@ namespace QRCodeGenerator
             var bitList = ErrorCorrectionCoding.ConvertToBitList(finalStream);
 
             var m = QRCodeMatrix.CreateBaseMatrix(2, bitList);
+            int result = EvaluationsConditions.EvaluationsConditoins4(m);
+            Console.WriteLine(result);
             
         }
     }

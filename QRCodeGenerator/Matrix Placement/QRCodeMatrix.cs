@@ -102,16 +102,16 @@
                     // Outer 1-pixel border is black
                     if (i == 0 || i == 6 || j == 0 || j == 6)
                     {
-                        matrix[r][c] = (int)ModuleType.Pattern;
+                        matrix[r][c] = 1;
                     }
                     // Inner 3x3 square is black
                     else if (i >= 2 && i <= 4 && j >= 2 && j <= 4)
                     {
-                        matrix[r][c] = (int)ModuleType.Pattern;
+                        matrix[r][c] = 1;
                     }
                     else
                     {
-                        matrix[r][c] = (int)ModuleType.Empty;
+                        matrix[r][c] = 0;
                     }
                 }
             }
@@ -137,17 +137,17 @@
 
         public static void SetEachAllignmentPattern(int[][] matrix, int c_row, int c_col)
         {
-            matrix[c_row][c_col] = (int)ModuleType.Pattern;
+            matrix[c_row][c_col] = 1;
             for (int i = c_row - 2; i < c_row + 3; i++)
             {
                 for (int j = c_col - 2; j < c_col + 3; j++)
                 {
                     if (i == c_row - 2 || j == c_col - 2 || j == c_col + 2 || i == c_row + 2)
                     {
-                        matrix[i][j] = (int)ModuleType.Pattern; ;
+                        matrix[i][j] = 1 ;
                     }
-                    else if (i == c_row && j == c_col) matrix[i][j] = (int)ModuleType.Pattern;
-                    else matrix[i][j] = (int)ModuleType.Empty;
+                    else if (i == c_row && j == c_col) matrix[i][j] = 1;
+                    else matrix[i][j] = 0;
                 }
             }
         }
@@ -156,12 +156,12 @@
         {
             for (int i = 8; i < size - 8; i++)
             {
-                matrix[6][i] = matrix[6][i - 1] == (int)ModuleType.Pattern ? 0 : (int)ModuleType.Pattern; ;
+                matrix[6][i] = matrix[6][i - 1] == 1 ? 0 : 1 ;
             }
 
             for (int i = 8; i < size - 8; i++)
             {
-                matrix[i][6] = matrix[i - 1][6] == (int)ModuleType.Pattern ? 0 : (int)ModuleType.Pattern;
+                matrix[i][6] = matrix[i - 1][6] == 1 ? 0 : 1;
             }
         }
 
@@ -169,7 +169,7 @@
         {
             int row = 8;
             int col = version * 4 + 9;
-            matrix[row][col] = (int)ModuleType.Pattern;
+            matrix[row][col] = 1;
             //Console.WriteLine(row + " " + col);
         }
 
@@ -177,14 +177,14 @@
         {
             for (int i = 0; i < 9; i++)
             {
-                matrix[8][i] = (int)ModuleType.Pattern;
-                matrix[8][size - i - 1] = (int)ModuleType.Pattern;
+                matrix[8][i] = 1;
+                matrix[8][size - i - 1] = 1;
             }
 
             for (int i = 0; i < 9; i++)
             {
-                matrix[i][8] = (int)ModuleType.Pattern;
-                matrix[size - i - 1][8] = (int)ModuleType.Pattern;
+                matrix[i][8] = 1;
+                matrix[size - i - 1][8] = 1;
             }
 
         }
