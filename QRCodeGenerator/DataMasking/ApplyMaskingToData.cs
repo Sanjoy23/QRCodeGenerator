@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.Common;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using QRCodeGenerator.Matrix_Placement;
 
 namespace QRCodeGenerator.DataMasking
 {
@@ -20,6 +15,53 @@ namespace QRCodeGenerator.DataMasking
             else if (mask_pattern == 6) return (((row * col) % 2) + ((row * col) % 3)) % 2 == 0;
             else if (mask_pattern == 7) return (((row + col) % 2) + ((row * col) % 3)) % 2 == 0;
             else return false;
+        }
+
+        public static int[][] FindBestMaskAndApply(int[][] matrix, int version, List<(int row, int col)> AllignmentLocations)
+        {
+            int minScore = int.MaxValue;
+            int bestMask = 0;
+
+            for (int i = 0; i < 8; i++)
+            {
+                int[][] maskedMatrix = ApplyMask(matrix, version, i, AllignmentLocations);
+                int totalScore = EvaluationsConditions.EvaluationsConditoins1(maskedMatrix, maskedMatrix.Length)
+                            + EvaluationsConditions.EvaluationsConditoins2(maskedMatrix, maskedMatrix.Length)
+                            + EvaluationsConditions.EvaluationsConditoins3(maskedMatrix, maskedMatrix.Length)
+                            + EvaluationsConditions.EvaluationsConditoins4(maskedMatrix);
+                if (totalScore < minScore)
+                {
+                    minScore = totalScore;
+                    bestMask = i;
+                }
+            }
+
+            return ApplyMask(matrix, version, bestMask, AllignmentLocations);
+        }
+
+        public static int[][] ApplyMask(int[][] matrix, int version, int maskPattern, List<(int row, int col)> AllignmentLocations)
+        {
+            int size = matrix.Length;
+            int[][] CopyMatrix = new int[size][];
+            for (int i = 0; i < size; i++)
+            {
+                CopyMatrix[i] = new int[size];
+                Array.Copy(matrix[i], CopyMatrix[i], size);
+            }
+            for (int i = 0; i < size; i++)
+            {
+                for (int j = 0; j < size; j++)
+                {
+                    if (QRCodeMatrix.CheckValidDataPlace(size, i, j, version))
+                    {
+                        if (Mask_Function(maskPattern, i, j))
+                        {
+                            CopyMatrix[i][j] = 1 - CopyMatrix[i][j];
+                        }
+                    }
+                }
+            }
+            return CopyMatrix;
         }
     }
 }

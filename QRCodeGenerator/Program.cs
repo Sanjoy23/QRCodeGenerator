@@ -23,6 +23,11 @@ namespace QRCodeGenerator
             var bitList = ErrorCorrectionCoding.ConvertToBitList(finalStream);
 
             var m = QRCodeMatrix.CreateBaseMatrix(2, bitList);
+            var locations = QRCodeMatrix.AllignmentLocations;
+            foreach (var loc in locations)
+            {
+                Console.WriteLine("locatons: " + loc);
+            }
             int result = EvaluationsConditions.EvaluationsConditoins4(m);
             Console.WriteLine(result);
             
