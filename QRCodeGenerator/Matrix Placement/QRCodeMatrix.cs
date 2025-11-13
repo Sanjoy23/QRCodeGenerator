@@ -1,4 +1,6 @@
 ﻿using System.Drawing;
+using System.Drawing.Imaging;
+using static System.Formats.Asn1.AsnWriter;
 
 namespace QRCodeGenerator.Matrix_Placement
 {
@@ -282,6 +284,39 @@ namespace QRCodeGenerator.Matrix_Placement
                 for (int j = 0; j < preSize; j++) newQrMatrix[i + quiteModules][j + quiteModules] = matrix[i][j];
             }
             return newQrMatrix;
+        }
+
+        public static void SaveMatrixAsPng(int[][] matrix, string fileName = "qrcode.png", int scale = 10)
+        {
+            int size = matrix.Length;
+            int imgSize = size * scale;
+
+            // Ensure folder exists in solution location
+            string folderPath = Path.Combine(Directory.GetCurrentDirectory(), "Generated");
+            Directory.CreateDirectory(folderPath);
+
+            string filePath = Path.Combine(folderPath, fileName);
+
+            using (Bitmap bmp = new Bitmap(imgSize, imgSize))
+            {
+                using (Graphics g = Graphics.FromImage(bmp))
+                {
+                    g.Clear(Color.White); // QR background is white
+
+                    for (int row = 0; row < size; row++)
+                    {
+                        for (int col = 0; col < size; col++)
+                        {
+                            Color color = matrix[row][col] == 1 ? Color.Black : Color.White;
+                            g.FillRectangle(new SolidBrush(color), col * scale, row * scale, scale, scale);
+                        }
+                    }
+                }
+
+                bmp.Save(filePath, ImageFormat.Png);
+            }
+
+            Console.WriteLine($"QR Code saved to {filePath}");
         }
     }
 

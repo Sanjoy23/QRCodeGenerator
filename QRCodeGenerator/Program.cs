@@ -39,8 +39,8 @@ namespace QRCodeGenerator
                 for (int j = 0; j < finalQrMatrix.Length; j++) Console.Write(finalQrMatrix[i][j]);
                 Console.WriteLine();
             }
-
-            Console.WriteLine(finalQrMatrix.Length);
+            QRCodeMatrix.SaveMatrixAsPng(finalQrMatrix, "qrcode.png", 5);
+            //Console.WriteLine(finalQrMatrix.Length);
 
 
         }
