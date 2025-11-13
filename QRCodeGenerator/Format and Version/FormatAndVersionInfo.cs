@@ -32,23 +32,52 @@ namespace QRCodeGenerator.Format_and_Version
             return Convert.ToString(formatString, 2).PadLeft(15, '0');
         }
 
-        public static int[][] SetFormatStirngToQrMatrix(int[][] matrix, string formatString)
+        public static int[][] SetFormatStirngToQrMatrix(int[][] matrix, string formatString, int version = 1)
         {
-            int len = formatString.Length;
             int size = matrix.Length;
-            int col = 0, row = 8;
             int[] bits = formatString.Select(c => c == '1' ? 1 : 0).ToArray();
-            for (int i = 0; i < 15; i++)
+            
+            // Place format information in top-left area
+            int bitIndex = 0;
+            for (int col = 0; col <= 8; col++)
             {
-                if (col == 6) col++;
-                if (row == 6) row--;
-                if (col < 9) matrix[row][col++] = bits[i];
-                else if (col >= 9) matrix[row--][col] = bits[i];
+                if (col == 6) continue; // Skip timing pattern column
+                if (bitIndex < 8)
+                {
+                    matrix[8][col] = bits[bitIndex++];
+                }
+            }
+            
+            // Column 8, rows 7 down to 0 (skipping row 6 which is timing pattern)
+            for (int row = 7; row >= 0; row--)
+            {
+                if (row == 6) continue; 
+                if (bitIndex < 15)
+                {
+                    matrix[row][8] = bits[bitIndex++];
+                }
             }
 
-            int[] rowPositions = { size - 1, size - 2, size - 3, size - 4, size - 5, size - 6, size - 7, size - 8 };
-            for (int i = 0; i < 7; i++) matrix[rowPositions[i]][8] = bits[i];
-            for (int i = 7; i < 15; i++) matrix[8][size - 15 + i] = bits[i];
+            // Place format information in bottom-right area (duplicate for redundancy)
+            int[] rowPositions = { size - 1, size - 2, size - 3, size - 4, size - 5, size - 6, size - 7 };
+            for (int i = 0; i < 7; i++)
+            {
+                matrix[rowPositions[i]][8] = bits[i];
+            }
+            
+            // Dark Module
+            int darkModuleCol = version * 4 + 9;
+            int bottomRightStartCol = size - 8;
+            bitIndex = 7;
+            for (int col = bottomRightStartCol; col < size; col++)
+            {
+                if (col == darkModuleCol) continue;
+                if (bitIndex < 15)
+                {
+                    matrix[8][col] = bits[bitIndex++];
+                }
+            }
+            
             return matrix;
         }
 

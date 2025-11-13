@@ -29,7 +29,7 @@ namespace QRCodeGenerator
             var masked_matrix = ApplyMaskingToData.FindBestMaskAndApply(m, 4, locations);
 
             string formatStirng = FormatAndVersionInfo.GenerateFormatString(ErrorCorrectionLevel.L, ApplyMaskingToData.FinalMaskPattern);
-            int[][] placedFormatMatrix = FormatAndVersionInfo.SetFormatStirngToQrMatrix(masked_matrix, formatStirng);
+            int[][] placedFormatMatrix = FormatAndVersionInfo.SetFormatStirngToQrMatrix(masked_matrix, formatStirng, 4);
             
             //FormatAndVersionInfo.GenerateVersionInfoString(7);
 

@@ -1,5 +1,6 @@
 ﻿using System.Drawing;
 using System.Drawing.Imaging;
+using SkiaSharp;
 using static System.Formats.Asn1.AsnWriter;
 
 namespace QRCodeGenerator.Matrix_Placement
@@ -158,14 +159,18 @@ namespace QRCodeGenerator.Matrix_Placement
 
         public static void AddTimingPattern(int[][] matrix, int size)
         {
+            // Horizontal timing pattern (row 6, columns 8 to size-9)
+            // Alternates starting with 1 at column 8
             for (int i = 8; i < size - 8; i++)
             {
-                matrix[6][i] = matrix[6][i - 1] == 1 ? 0 : 1;
+                matrix[6][i] = (i - 8) % 2 == 0 ? 1 : 0;
             }
 
+            // Vertical timing pattern (column 6, rows 8 to size-9)
+            // Alternates starting with 1 at row 8
             for (int i = 8; i < size - 8; i++)
             {
-                matrix[i][6] = matrix[i - 1][6] == 1 ? 0 : 1;
+                matrix[i][6] = (i - 8) % 2 == 0 ? 1 : 0;
             }
         }
 
@@ -179,18 +184,12 @@ namespace QRCodeGenerator.Matrix_Placement
 
         public static void AddReverseFormatInfoArea(int[][] matrix, int size)
         {
-            for (int i = 0; i < 9; i++)
-            {
-                matrix[8][i] = 1;
-                matrix[8][size - i - 1] = 1;
-            }
-
-            for (int i = 0; i < 9; i++)
-            {
-                matrix[i][8] = 1;
-                matrix[size - i - 1][8] = 1;
-            }
-
+            // Reserve format info area (leave empty - will be filled later by SetFormatStirngToQrMatrix)
+            // The format info area consists of:
+            // - Row 8: columns 0-8 and columns (size-8) to (size-1)
+            // - Column 8: rows 0-8 and rows (size-8) to (size-1)
+            // We need to mark these as reserved but NOT fill them with 1s
+            // The IsValidDataModule check will exclude these areas from data placement
         }
 
         public static void AddReverseVersionInfoArea(int[][] matrix, int size, int version)
@@ -200,13 +199,16 @@ namespace QRCodeGenerator.Matrix_Placement
         }
         public static void AddDataBits(int[][] matrix, List<byte> dataBits, int version, int size)
         {
-
             int bitIndex = 0;
             int direction = -1; // -1 means moving up, +1 means down
 
             for (int col = size - 1; col > 0; col -= 2)
             {
-                if (col == 7) col--;
+                // Skip timing pattern column
+                if (col == 6)
+                {
+                    col = 5; 
+                }
 
                 for (int row = (direction == -1 ? size - 1 : 0);
                          (direction == -1 ? row >= 0 : row < size);
@@ -217,9 +219,9 @@ namespace QRCodeGenerator.Matrix_Placement
                         if (left < 0) continue;
                         if (IsValidDataModule(size, row, left, version))
                         {
+                            if (bitIndex >= dataBits.Count) return;
                             matrix[row][left] = dataBits[bitIndex++];
                         }
-                        if (bitIndex > dataBits.Count) return;
                     }
                 }
                 direction *= -1;
@@ -246,10 +248,18 @@ namespace QRCodeGenerator.Matrix_Placement
 
         public static bool IsValidDataModule(int size, int row, int col, int version)
         {
+            // Exclude finder pattern areas (top-left, top-right, bottom-left)
             if ((row < 9 && col < 9) || (row < 9 && col > size - 9) || (col < 9 && row > size - 9)) return false;
+            
+            // Exclude timing patterns
             if (row == 6) return false;
             if (col == 6) return false;
 
+            // Exclude format info area
+            if (row == 8 && (col < 9 || col >= size - 8)) return false;
+            if (col == 8 && (row < 9 || row >= size - 8)) return false;
+
+            // Exclude alignment pattern areas
             if (size > 21)
             {
                 foreach (var loc in AllignmentLocations)
@@ -261,6 +271,7 @@ namespace QRCodeGenerator.Matrix_Placement
                 }
             }
 
+            // Exclude dark module
             if (row == version * 4 + 9 && col == 8)
                 return false;
             return true;
@@ -291,32 +302,36 @@ namespace QRCodeGenerator.Matrix_Placement
             int size = matrix.Length;
             int imgSize = size * scale;
 
-            // Ensure folder exists in solution location
             string folderPath = Path.Combine(Directory.GetCurrentDirectory(), "Generated");
             Directory.CreateDirectory(folderPath);
 
             string filePath = Path.Combine(folderPath, fileName);
 
-            using (Bitmap bmp = new Bitmap(imgSize, imgSize))
+            using var bitmap = new SKBitmap(imgSize, imgSize);
+            using var canvas = new SKCanvas(bitmap);
+
+            canvas.Clear(SKColors.White);
+
+            using var blackPaint = new SKPaint { Color = SKColors.Black };
+            using var whitePaint = new SKPaint { Color = SKColors.White };
+
+            for (int row = 0; row < size; row++)
             {
-                using (Graphics g = Graphics.FromImage(bmp))
+                for (int col = 0; col < size; col++)
                 {
-                    g.Clear(Color.White); // QR background is white
-
-                    for (int row = 0; row < size; row++)
-                    {
-                        for (int col = 0; col < size; col++)
-                        {
-                            Color color = matrix[row][col] == 1 ? Color.Black : Color.White;
-                            g.FillRectangle(new SolidBrush(color), col * scale, row * scale, scale, scale);
-                        }
-                    }
+                    var paint = matrix[row][col] == 1 ? blackPaint : whitePaint;
+                    float x = col * scale;
+                    float y = row * scale;
+                    canvas.DrawRect(x, y, scale, scale, paint);
                 }
-
-                bmp.Save(filePath, ImageFormat.Png);
             }
 
-            Console.WriteLine($"QR Code saved to {filePath}");
+            using var image = SKImage.FromBitmap(bitmap);
+            using var data = image.Encode(SKEncodedImageFormat.Png, 100);
+            using var stream = File.OpenWrite(filePath);
+            data.SaveTo(stream);
+
+            Console.WriteLine($"✅ QR Code saved to {filePath}");
         }
     }
 
