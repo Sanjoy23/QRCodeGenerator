@@ -4,6 +4,7 @@ namespace QRCodeGenerator.DataMasking
 {
     public static class ApplyMaskingToData
     {
+        public static int FinalMaskPattern;
         public static bool Mask_Function(int mask_pattern, int row, int col)
         {
             if (mask_pattern == 0) return (row + col) % 2 == 0;
@@ -33,6 +34,7 @@ namespace QRCodeGenerator.DataMasking
                 {
                     minScore = totalScore;
                     bestMask = i;
+                    FinalMaskPattern = i;
                 }
             }
 
@@ -52,8 +54,9 @@ namespace QRCodeGenerator.DataMasking
             {
                 for (int j = 0; j < size; j++)
                 {
-                    if (QRCodeMatrix.CheckValidDataPlace(size, i, j, version))
+                    if (QRCodeMatrix.IsValidDataModule(size, i, j, version))
                     {
+                        //Console.WriteLine($"row: {i} col: {j}");
                         if (Mask_Function(maskPattern, i, j))
                         {
                             CopyMatrix[i][j] = 1 - CopyMatrix[i][j];

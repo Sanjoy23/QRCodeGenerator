@@ -1,4 +1,6 @@
-﻿namespace QRCodeGenerator.Matrix_Placement
+﻿using System.Drawing;
+
+namespace QRCodeGenerator.Matrix_Placement
 {
     public static class QRCodeMatrix
     {
@@ -72,20 +74,20 @@
             AddDataBits(matrix, message, version, size);
 
 
-            for (int i = 0; i < size; i++)
-            {
-                for (int j = 0; j < size; j++)
-                {
-                    Console.Write(matrix[i][j]);
+            //for (int i = 0; i < size; i++)
+            //{
+            //    for (int j = 0; j < size; j++)
+            //    {
+            //        Console.Write(matrix[i][j]);
 
-                }
-                Console.WriteLine();
-            }
+            //    }
+            //    Console.WriteLine();
+            //}
 
-            for (int i = 0; i < AllignmentLocations.Count; i++)
-            {
-                Console.WriteLine(AllignmentLocations[i]);
-            }
+            //for (int i = 0; i < AllignmentLocations.Count; i++)
+            //{
+            //    Console.WriteLine(AllignmentLocations[i]);
+            //}
             return matrix;
 
         }
@@ -144,7 +146,7 @@
                 {
                     if (i == c_row - 2 || j == c_col - 2 || j == c_col + 2 || i == c_row + 2)
                     {
-                        matrix[i][j] = 1 ;
+                        matrix[i][j] = 1;
                     }
                     else if (i == c_row && j == c_col) matrix[i][j] = 1;
                     else matrix[i][j] = 0;
@@ -156,7 +158,7 @@
         {
             for (int i = 8; i < size - 8; i++)
             {
-                matrix[6][i] = matrix[6][i - 1] == 1 ? 0 : 1 ;
+                matrix[6][i] = matrix[6][i - 1] == 1 ? 0 : 1;
             }
 
             for (int i = 8; i < size - 8; i++)
@@ -211,7 +213,7 @@
                     for (int left = col; left > col - 2; left--)
                     {
                         if (left < 0) continue;
-                        if (CheckValidDataPlace(size, row, left, version))
+                        if (IsValidDataModule(size, row, left, version))
                         {
                             matrix[row][left] = dataBits[bitIndex++];
                         }
@@ -240,7 +242,7 @@
             return ((row < 8 && col < 8) || (row < 8 && col > size - 9) || (row > size - 9 && col < 8));
         }
 
-        public static bool CheckValidDataPlace(int size, int row, int col, int version)
+        public static bool IsValidDataModule(int size, int row, int col, int version)
         {
             if ((row < 9 && col < 9) || (row < 9 && col > size - 9) || (col < 9 && row > size - 9)) return false;
             if (row == 6) return false;
@@ -260,6 +262,26 @@
             if (row == version * 4 + 9 && col == 8)
                 return false;
             return true;
+        }
+
+        public static int[][] AddQuiteZone(int[][] matrix, int quiteModules = 4)
+        {
+            int preSize = matrix.Length;
+            int newSize = matrix.Length + quiteModules * 2;
+
+            int[][] newQrMatrix = new int[newSize][];
+
+            for (int i = 0; i < newSize; i++)
+            {
+                newQrMatrix[i] = new int[newSize];
+                for (int j = 0; j < newSize; j++) newQrMatrix[i][j] = 0;
+            }
+
+            for (int i = 0; i < preSize; i++)
+            {
+                for (int j = 0; j < preSize; j++) newQrMatrix[i + quiteModules][j + quiteModules] = matrix[i][j];
+            }
+            return newQrMatrix;
         }
     }
 

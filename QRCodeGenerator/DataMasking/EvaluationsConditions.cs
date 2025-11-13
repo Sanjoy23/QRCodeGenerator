@@ -46,7 +46,7 @@
                     }
                 }
             }
-            Console.WriteLine($"Hori: {TotalHori}, Vert: {TotalVert}");
+            //Console.WriteLine($"Hori: {TotalHori}, Vert: {TotalVert}");
             return TotalVert + TotalHori;
         }
 
