@@ -12,6 +12,6 @@ This solution implements a QR code based on the standard ISO/IEC 18004:2015.
 
 
 ![alt text](https://github.com/Sanjoy23/QRCodeGenerator/blob/main/qrcode.png)
-Build and Run:
+- Build and Run:
 
-Open Visual Studio or  Visual Studio Code and command dotnet run
+- Open Visual Studio or  Visual Studio Code and command dotnet run
