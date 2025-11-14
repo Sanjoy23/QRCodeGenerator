@@ -6,13 +6,12 @@ Description
 
 This solution implements a QR code based on the standard ISO/IEC 18004:2015.
 
-implemented all quality types L M Q H
-implemented modes: alphanumeric
-implemented version: 4
+- implemented all quality types L M Q H
+- implemented modes: alphanumeric
+- implemented version: 4
 
 
-qrcode.png
-
+![alt text](https://github.com/Sanjoy23/QRCodeGenerator/blob/main/qrcode.png)
 Build and Run:
 
 Open Visual Studio or  Visual Studio Code and command dotnet run
